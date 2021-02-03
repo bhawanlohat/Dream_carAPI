@@ -30,10 +30,7 @@ namespace Dream_carAPI
         {
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Dream_carAPI", Version = "v1" });
-            });
+            services.AddRazorPages();
 
             services.AddDbContext<Dream_carAPIDatabase>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("Dream_carAPIDatabase")));
@@ -45,8 +42,6 @@ namespace Dream_carAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Dream_carAPI v1"));
             }
 
             app.UseHttpsRedirection();
@@ -58,6 +53,10 @@ namespace Dream_carAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapRazorPages();
             });
         }
     }
