@@ -1,4 +1,269 @@
 ﻿@page
 @model Dream_carAPI.Pages.IndexModel
 @{
+
 }
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Car </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body style="background-color:coral">
+
+    <div>
+        <!-- Navigation bar code -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-warning">
+            <a class="navbar-brand" href="#" style="text-align:center">car Data</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <button class="btn btn-outline-dark" data-toggle="modal" data-target="#addcars" style="background-position:right">Add New Car</button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- following division is creating main area of the web page where all books data will display -->
+        <div class="container">
+            <div class="row" id="allcars">
+            </div>
+        </div>
+    </div>
+
+    <!-- below mentioned code will create the template to add a new book -->
+    <div class="modal" tabindex="-1" role="dialog" id="addcars">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add car</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+
+                            <label for="company_Name">Company Name</label>
+                            <input type="text" class="form-control" id="company_Name" aria-describedby="Company_NameHelp" placeholder="Enter company Name">
+
+                        </div>
+                        <div class="form-group">
+                            <label for="model_Name">Model</label>
+                            <input type="text" class="form-control" id="model_Name" aria-describedby="model yearHelp" placeholder="Enter Model Name">
+
+                        </div>
+                        <div class="form-group">
+                            <label for="model_Year">Model Year</label>
+                            <input type="text" class="form-control" id="model_Year" aria-describedby="Model yearHelp" placeholder="Enter Model Year">
+                        </div>
+                        <div class="form-group">
+                            <label for="fuel_type">Fuel type</label>
+                            <input type="text" class="form-control" id="fuel_type" aria-describedby="fuel_TypeHelp" placeholder="Enter Fuel Type">
+                        </div>
+                        <div class="form-group">
+                            <label for="transmission">Transmission</label>
+                            <input 0. class="form-control" id="transmission" aria-describedby="transmissionHelp" placeholder="Enter transmission">
+                        </div>
+                        <div class="form-group" id="result">
+
+
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="addcars()">Add Car</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- below mentioned code will create the template to Update a new book -->
+    <div class="modal" tabindex="-1" role="dialog" id="Updatecars">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Update Cars Data</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="Update_id" aria-describedby="IdHelp">
+                        </div>
+                        <div class="form-group">
+                            <label for="company_Name">Company Name</label>
+                            <input type="text" class="form-control" id="Update_company_Name" aria-describedby="company_NameHelp">
+                        </div>
+                        <div class="form-group">
+                            <label for="model_Name">Model</label>
+                            <input type="text" class="form-control" id="Update_model_Name" aria-describedby="model_NameHelp">
+                        </div>
+                        <div class="form-group">
+                            <label for="model_Year">Model Year</label>
+                            <input type="text" class="form-control" id="Update_model_Year" aria-describedby="model_YearHelp">
+                        </div>
+                        <div class="form-group">
+                            <label for="fuel_type">Fuel Type</label>
+                            <input type="text" class="form-control" id="Update_fuel_type" aria-describedby="fuel_typeHelp">
+                        </div>
+                        <div class="form-group">
+                            <label for="transmission">Transmission</label>
+                            <input 0. class="form-control" id="Update_transmission" aria-describedby="transmissionHelp">
+                        </div>
+                        <div class="form-group" id="update_result">
+
+
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="updatecar()">Update</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <! -- java script files that will help to link the front end and back end -->
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <script>
+        var uri = 'api/cars';
+        //Java script main function so JS start from here
+        $(document).ready(function () {
+            $.getJSON(uri)
+                .done(function (data) {
+                    $("#carsTemplate").tmpl(data).appendTo("#allcars");
+                });
+        });
+        // function to get all cars data and show on web page
+        function getAllcars() {
+            $.getJSON(uri)
+                .done(function (data) {
+                    $("#allcars").text("");
+                    $("#carsTemplate").tmpl(data).appendTo("#allcars");
+                });
+        }
+        // function to add data for new car
+        function addcars() {
+            var _company_Name = $('#company_Name').val();
+            var _model_Name = $('#model_Name').val();
+            var _model_Year = $('#model_Year').val();
+            var _fuel_type = $('#fuel_type').val();
+            var _transmission = $('#transmission').val();
+            var car = {
+                company_Name: _company_Name,
+                model_Name: _model_Name,
+                model_Year: _model_Year,
+                fuel_type: _fuel_type,
+                transmission: _transmission
+            };
+            $.ajax({
+                type: "POST",
+                url: uri,
+                data: JSON.stringify(car),
+                contentType: "application/json; charset=utf-8"
+            }).done(function (response) {
+                $("#result").html("New car data is added successfully");
+                getAllcars();
+            }).fail(function (jqXHR, textStatus) {
+                $("#result").html("An error occured when Adding the car record.");
+            });
+        }
+        //funtion to delete a particular car based on id
+        function remove(id) {
+            var yes = confirm("Are you sure you want to delete this car?");
+            if (yes) {
+                $.ajax({
+                    type: "DELETE",
+                    url: uri + "/" + id,
+                }).done(function (response) {
+                    $("#result").html("car data is deleted successfully");
+                    getAllcars();
+                }).fail(function (jqXHR, textStatus) {
+                    $("#result").html("An error occured when deleting the car record.");
+                });
+            }
+        }
+        // funtion to fill the data into update template
+        function getcarForUpdate(id) {
+            $.ajax({
+                type: "GET",
+                url: uri + "/" + id,
+                contentType: "application/json"
+            }).done(function (response) {
+                $('#Update_id').val(response.id);
+                $('#Update_company_Name').val(response.company_Name);
+                $('#Update_model_Name').val(response.model_Name);
+                $('#Update_model_Year').val(response.model_Year);
+                $('#Update_fuel_type').val(response.fuel_type);
+                $('#Update_transmission').val(response.transmission);
+            });
+        }
+        // function to update data of the car
+        function updatecar() {
+            var _company_Name = $('#Update_company_Name').val();
+            var _model_Name = $('#Update_model_Name').val();
+            var _model_Year = $('#Update_model_Year').val();
+            var _fuel_type = $('#Update_fuel_type').val();
+            var _transmission = $('#Update_transmission').val();
+            var carUpdate = {
+                id: parseInt($('#Update_id').val()),
+                company_Name: _company_Name,
+                model_Name: _model_Name,
+                model_Year: _model_Year,
+                fuel_type: _fuel_type,
+                transmission: _transmission
+            };
+            $.ajax({
+                type: "PUT",
+                url: uri + "/" + $('#Update_id').val(),
+                data: JSON.stringify(carUpdate),
+                contentType: "application/json; charset=utf-8"
+            }).done(function (response) {
+                $("#update_result").html("Record is updated Successfully");
+                getAllcars();
+            }).fail(function (jqXHR, textStatus) {
+                $("#update_result").html("An error occured when updating student record.");
+            });
+        }
+    </script>
+
+    <!-- below mentioned code will create the template on the web page to display all books -->
+    <script id="carsTemplate" type="text/x-jquery-tmpl">
+        <div class="col-lg-4" style="margin:50px;">
+            <div class="card card text-white border-warning mb-3" style="width: 20rem;background-color:chocolate padding:30px">
+                <div class="card-body">
+                    <h5 class="card-title">Company Name: ${company_Name}</h5>
+                    <p class="card-text">Model Name :  ${model_Name}</p>
+                    <p class="card-text">Model Year : ${model_year}</p>
+                    <p class="card-text">Fuel type : ${fuel_type}</p>
+                    <p class="card-text">Transmission : ${transmission}</p>
+                </div>
+                <span>
+                    <button class="btn btn-primary" onclick="getcarForUpdate('${id}')" data-toggle="modal" data-target="#Updatecars">Update</button>
+                    <a href="#" class="btn btn-danger" onclick="remove('${id}')">Delete</a>
+                </span>
+            </div>
+        </div>
+    </script>
+</body>
+</html>
